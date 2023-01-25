@@ -15,8 +15,8 @@
             <tbody>
             {% for task in tasks %}
                 <tr>
-                    <th scope="row"><img src="{{ asset('uploads/' ~ task.photo ) }}" alt="">{{ task.id }}</th>
-                    <td>{{ task.name }} <br> {{ task.description }}</td>
+                    <th scope="row">{{ task.id }}</th>
+                    <td><img src="{{ asset('uploads/' ~ task.photo ) }}" alt="" width="150" height="150"> {{ task.name }} <br> {{ task.description }}</td>
                     <td>{{ task.status }}</td>
                     <td>{{ task.endDate|date('d/m/y') }}</td>
                     <td>

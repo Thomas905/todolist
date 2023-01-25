@@ -37,13 +37,23 @@ class TaskController extends AbstractController
         $form = $this->createForm(TaskFormTrypeType::class, $task);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('photo')->getData();
+            if ($image) {
+                $imageName = $task->getName() . uniqid() . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $imageName
+                );
+                $task->setPhoto($imageName);
+            }
             $task->setUser($this->getUser());
             $this->entityManager->persist($task);
             $this->entityManager->flush();
+            $this->addFlash('success', 'La tâche a bien été créée');
             return $this->redirectToRoute('task_index');
         }
-        return $this->render('task/task.html.twig', [
-            'text' => 'Créer une tâche',
+        return $this->render('task/create.html.twig', [
+            'buttontext' => 'Créer',
             'form' => $form,
         ]);
     }
@@ -54,20 +64,33 @@ class TaskController extends AbstractController
         $form = $this->createForm(TaskFormTrypeType::class, $task);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('photo')->getData();
+            if ($image) {
+                $imageName = $task->getName() . uniqid() . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $imageName
+                );
+                $task->setPhoto($imageName);
+            }
             $this->entityManager->flush();
+            $this->addFlash('success', 'La tâche a bien été modifiée');
             return $this->redirectToRoute('task_index');
         }
-        return $this->render('task/task.html.twig', [
-            'text' => 'Modifier une tâche',
+        return $this->render('task/edit.html.twig', [
+            'buttontext' => 'Modifier',
             'form' => $form,
+            'task' => $task,
         ]);
     }
 
     #[Route('/supprimer/{id}', name: 'delete')]
     public function delete(Task $task): Response
     {
+        unlink($this->getParameter('images_directory') . '/' . $task->getPhoto());
         $this->entityManager->remove($task);
         $this->entityManager->flush();
+        $this->addFlash('success', 'La tâche a bien été supprimée');
         return $this->redirectToRoute('task_index');
     }
 }

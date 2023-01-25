@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Modifier une tâche</h1>
+    {% include 'task/_form.html.twig' %}
+
+    <h2>Photo</h2>
+        <embed src="{{ asset('uploads/' ~ task.photo ) }}" width="350" height="350" >
+{% endblock %}
