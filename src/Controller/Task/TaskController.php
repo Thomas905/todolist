@@ -26,6 +26,7 @@ class TaskController extends AbstractController
     public function index()
     {
         return $this->render('task/index.html.twig', [
+            'user' => $this->getUser(),
             'tasks' => $this->getUser()->getTasks(),
         ]);
     }
@@ -53,6 +54,7 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_index');
         }
         return $this->render('task/create.html.twig', [
+            'user' => $this->getUser(),
             'buttontext' => 'Créer',
             'form' => $form,
         ]);
@@ -78,6 +80,7 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_index');
         }
         return $this->render('task/edit.html.twig', [
+            'user' => $this->getUser(),
             'buttontext' => 'Modifier',
             'form' => $form,
             'task' => $task,

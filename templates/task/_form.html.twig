@@ -1,4 +1,8 @@
-{{ form_start(form) }}
+<div class="container">
+    {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button type="submit" class="btn btn-primary">{{ buttontext }}</button>
-{{ form_end(form) }}
+        <div class="w-100 d-flex justify-content-end mt-3">
+            <button type="submit" class="btn btn-primary">{{ buttontext }}</button>
+        </div>
+    {{ form_end(form) }}
+</div>

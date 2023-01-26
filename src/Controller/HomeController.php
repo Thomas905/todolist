@@ -13,8 +13,6 @@ class HomeController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('auth_login');
         }
-    return $this->render('home.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        return $this->redirectToRoute('task_index');
     }
 }

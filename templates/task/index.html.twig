@@ -1,30 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Mes tâches</h1>
-    <a href="{{ path('task_new') }}">Ajouter une tâche</a>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Statut</th>
-                <th scope="col">Date de fin</th>
-                <th scope="col">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for task in tasks %}
-                <tr>
-                    <th scope="row">{{ task.id }}</th>
-                    <td><img src="{{ asset('uploads/' ~ task.photo ) }}" alt="" width="150" height="150"> {{ task.name }} <br> {{ task.description }}</td>
-                    <td>{{ task.status }}</td>
-                    <td>{{ task.endDate|date('d/m/y') }}</td>
-                    <td>
-                        <a href="{{ path('task_edit', {'id': task.id}) }}"><i class="fa-solid fa-pen"></i></a>
-                        <a href="{{ path('task_delete', {'id': task.id}) }}"><i class="fa-solid fa-trash text-danger"></i></a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+{% include 'components/_navbar.html.twig' %}
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-9 col-xl-12">
+                    <div class="card rounded-3">
+                        <div class="card-body p-5">
+                            <h1 class="text-center h1 my-3 d-flex align-items-center justify-content-between">Mes tâches <a href="{{ path('task_new') }}" class="btn btn-primary ms-5"><i class="fa-solid fa-plus me-2"></i>Ajouter une tâche</a></h1>
+                            {% include "components/_addflash.html.twig" %}
+                            <table class="table mb-4">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Statut</th>
+                                    <th scope="col">Date de fin</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for task in tasks %}
+                                    <tr>
+                                        <td><img src="{{ asset('uploads/' ~ task.photo ) }}" alt="" width="32" height="32"> {{ task.name }} <br> {{ task.description }}</td>
+                                        <td>{{ task.status }}</td>
+                                        <td>{{ task.endDate|date('d/m/y') }}</td>
+                                        <td>
+                                            <a href="{{ path('task_edit', {'id': task.id}) }}"><i class="fa-solid fa-pen me-4"></i></a>
+                                            <a href="{{ path('task_delete', {'id': task.id}) }}"><i class="fa-solid fa-trash text-danger"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
+
+

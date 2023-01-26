@@ -1,23 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{# ... #}
-
 {% block body %}
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
+    <div class="container mt-5">
+        <h1 class="text-center">Connexion</h1>
+        <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+            <form action="{{ path('auth_login') }}" method="post">
+                <div class="form-outline mb-4">
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control">
+                    <label class="form-label" for="username">Adresse mail</label>
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="password" id="password" name="_password" class="form-control">
+                    <label class="form-label" for="password">Mot de passe</label>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <input type="hidden" name="_target_path" value="/task" />
+                <button type="submit" class="btn btn-primary">Connexion</button>
+                <div class="text-center">
+                    <p>Pas encore  <a href="{{ path('auth_register') }}">inscrit</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <form action="{{ path('auth_login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}">
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password">
-
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <input type="hidden" name="_target_path" value="/task" />
-
-        <button type="submit">login</button>
-    </form>
 {% endblock %}
+
+
